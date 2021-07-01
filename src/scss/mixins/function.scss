@@ -1,0 +1,51 @@
+// str-slice(string, start, end)	
+//     从 string 中截取子字符串，通过 start-at 和 end-at 设置始末位置
+// str-index(string, substring)	
+//     返回 substring 子字符串第一次在 string 中出现的位置。如果没有匹配到子字符串，则返回 null。
+
+@import "config.scss";
+
+/* BEM support Func
+ -------------------------- */
+@function selectorToString($selector) {
+    $selector: inspect($selector);
+    $selector: str-slice($selector, 2, -2);
+    @return $selector;
+}
+
+@function containsModifier($selector) {
+    $selector: selectorToString($selector);
+
+    @if str-index($selector, $modifier-separator) {
+        @return true;
+    }
+    @else {
+        @return false;
+    }
+}
+
+@function containWhenFlag($selector) {
+    $selector: selectorToString($selector);
+
+    @if str-index($selector, '.' + $state-prefix) {
+        @return true;
+    }
+    @else {
+        @return false;
+    }
+}
+
+@function containPseudoClass($selector) {
+    $selector: selectorToString($selector);
+
+    @if str-index($selector, ':') {
+        @return true;
+    }
+    @else {
+        @return false;
+    }
+}
+
+@function hitAllSpecialNestRule($selector) {
+    @return containsModifier($selector) or containWhenFlag($selector) or containPseudoClass($selector);
+}

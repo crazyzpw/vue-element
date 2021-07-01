@@ -1,0 +1,102 @@
+// 变量 Variable
+//     !default
+//         如果这个变量被声明赋值了，那就用它声明的值，否则就用这个默认值
+//         例: $width: 5em !default;
+
+//             变量是 null 值时将视为未被声明赋值
+//             $content: null;
+
+//     !global
+//         将局部变量转换为全局变量可以添加 !global 声明
+//         例: $width: 5em !global;
+
+// 注释 Comments
+//     // 不会出现在生成的css文件中
+//     /* ... */ 会出现在生成的css文件中 
+
+// 插值语句 #{} Interpolation
+//     通过 #{} 插值语句可以在选择器或属性名中使用变量
+//         例:
+//             $name: foo;
+//             $attr: border;
+//             p.#{$name} {
+//                 #{$attr}-color: blue;
+//             }
+
+//     #{} 插值语句也可以在属性值中插入 SassScript
+
+/* Transition
+-------------------------- */
+$--border-transition-base: border-color .2s cubic-bezier(.645,.045,.355,1) !default;
+
+/* Color
+ * ------------------------- */
+$--color-primary: #409eff !default;
+$--color-white: #fff !default;
+$--color-black: #000 !default;
+
+$--color-primary-light-1: mix($--color-white, $--color-primary, 10%) !default;
+$--color-primary-light-2: mix($--color-white, $--color-primary, 20%) !default;
+$--color-primary-light-3: mix($--color-white, $--color-primary, 30%) !default;
+$--color-primary-light-4: mix($--color-white, $--color-primary, 40%) !default;
+$--color-primary-light-5: mix($--color-white, $--color-primary, 50%) !default;
+$--color-primary-light-6: mix($--color-white, $--color-primary, 60%) !default;
+$--color-primary-light-7: mix($--color-white, $--color-primary, 70%) !default;
+$--color-primary-light-8: mix($--color-white, $--color-primary, 80%) !default;
+$--color-primary-light-9: mix($--color-white, $--color-primary, 90%) !default;
+
+$--color-success: #67c23a !default;
+$--color-warning: #e6a23c !default;
+$--color-danger: #f56c6c !default;
+$--color-info: #909399 !default;
+
+$--color-success-light: mix($--color-white, $--color-success, 80%) !default;
+$--color-warning-light: mix($--color-white, $--color-warning, 80%) !default;
+$--color-danger-light: mix($--color-white, $--color-danger, 80%) !default;
+$--color-info-light: mix($--color-white, $--color-info, 80%) !default;
+
+$--color-success-lighter: mix($--color-white, $--color-success, 90%) !default;
+$--color-warning-lighter: mix($--color-white, $--color-warning, 90%) !default;
+$--color-danger-lighter: mix($--color-white, $--color-danger, 90%) !default;
+$--color-info-lighter: mix($--color-white, $--color-info, 90%) !default;
+
+$--color-text-primary: #303133 !default;
+$--color-text-regular: #606266 !default;
+$--color-text-secondary: #909399 !default;
+$--color-text-placeholder: #c0c4cc !default;
+
+/* Border
+-------------------------- */
+$--border-color-base: #dcdfe6 !default;
+$--border-color-light: #e4e7ed !default;
+$--border-color-lighter: #ebeef5 !default;
+$--border-color-extra-light: #f2f6fC !default;
+
+$--border-width-base: 1px !default;
+$--border-style-base: solid !default;
+$--border-color-hover: $--color-text-placeholder !default;
+$--border-base: $--border-width-base $--border-style-base $--border-color-base !default;
+
+$--border-radius-base: 4px !default;
+$--border-radius-small: 2px !default;
+$--border-radius-zero: 0 !default;
+$--border-radius-circle: 100% !default;
+
+/* Typography
+ * ------------------------- */
+$--font-path: './fonts' !default;
+$--font-display: 'auto' !default;
+$--font-size-extra-large: 20px !default;
+$--font-size-large: 18px !default;
+$--font-size-medium: 16px !default;
+$--font-size-base: 14px !default;
+$--font-size-small: 13px !default;
+$--font-size-extra-small: 12px !default;
+
+$--font-weight-primary: 500 !default;
+$--font-weight-secondary: 100 !default;
+
+$--font-line-height-primary: 24px !default;
+$--font-line-height-secondary: 16px !default;
+
+$--font-color-disabled-base: #bbb !default;
