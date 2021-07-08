@@ -70,22 +70,6 @@ Message.close = function (id, userOnClose) {
 
 export default Message
 
-// Vue.extend = function (extendOptions: Object): Function {
-//   extendOptions = extendOptions || {}
-
-//   const Sub = function VueComponent (options) {
-//     this._init(options)
-//   }
-
-//   Sub.options = mergeOptions(
-//     Vue.options,
-//     extendOptions
-//   )
-//   // 继承 Vue 上 global api
-
-//   return Sub
-// }
-
 // 挂载时，挂载关闭定时器
 // // 动态创建的组件，没有在代码视图上展示，也就无法触发 destroyed 去做相应的操作
 // // 这种做法可以让 dom 元素 执行完动画以后,删除
