@@ -1,15 +1,17 @@
 import Loading from './components/loading/index.js'
 import Message from './components/message/index.js'
+import Switch from './components/switch/index.js'
 
-const components = []
+const components = [
+  Switch
+]
 
-const install = function (Vue, opts = {}) {
+const install = function (Vue) {
   components.forEach(component => {
     Vue.component(component.name, component)
   })
 
   Vue.use(Loading.directive)
-
   Vue.prototype.$message = Message
   Vue.prototype.$loading = Loading.service
 }
@@ -17,5 +19,6 @@ const install = function (Vue, opts = {}) {
 export default {
   install,
   Loading,
-  Message
+  Message,
+  Switch
 }
