@@ -1,0 +1,168 @@
+@import "mixins/mixins";
+@import "common/var";
+
+$--input-font-size: $--font-size-base !default;
+
+$--input-height: 40px !default;
+
+$--input-font-color: $--color-text-regular !default;
+
+$--input-border: $--border-base !default;
+$--input-border-radius: $--border-radius-base !default;
+
+$--input-background-color: $--color-white !default;
+
+$--input-placeholder-color: $--color-text-placeholder !default;
+
+$--input-hover-border: $--border-color-hover !default;
+$--input-clear-hover-color: $--color-text-secondary !default;
+
+$--input-focus-border: $--color-primary !default;
+
+$--input-icon-color: $--color-text-placeholder !default;
+
+@include b(input) {
+    position: relative;
+    font-size: $--font-size-base;
+    display: inline-block;
+    width: 100%;
+    @include scroll-bar;
+
+    & .el-input__clear {
+        color: $--input-icon-color;
+        font-size: $--input-font-size;
+        cursor: pointer;
+        transition: $--color-transition-base;
+
+        &:hover {
+            color: $--input-clear-hover-color;
+        }
+    }
+
+    & .el-input__count {
+        height: 100%;
+        display: inline-flex;
+        align-items: center;
+        color: $--color-info;
+        font-size: 12px;
+
+        .el-input__count-inner {
+            background: $--color-white;
+            line-height: initial;
+            display: inline-block;
+            padding: 0 5px;
+        }
+    }
+
+    @include e(inner) {
+        -webkit-appearance: none;
+        background-color: $--input-background-color;
+        background-image: none;
+        border-radius: $--input-border-radius;
+        border: $--input-border;
+        box-sizing: border-box;
+        color: $--input-font-color;
+        display: inline-block;
+        font-size: inherit;
+        height: $--input-height;
+        line-height: $--input-height;
+        outline: none;
+        padding: 0 15px;
+        transition: $--border-transition-base;
+        width: 100%;
+
+        &::-ms-reveal {
+            display: none;
+        }
+
+        &::placeholder {
+            color: $--input-placeholder-color;
+        }
+
+        &:hover {
+            border-color: $--input-hover-border;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: $--input-focus-border;
+        }
+    }
+
+    @include e(suffix) {
+        position: absolute;
+        height: 100%;
+        right: 5px;
+        top: 0;
+        text-align: center;
+        color: $--input-icon-color;
+        transition: all .3s;
+        pointer-events: none;
+    }
+
+    @include e(suffix-inner) {
+        pointer-events: all;
+    }
+
+    @include e(icon) {
+        height: 100%;
+        width: 25px;
+        text-align: center;
+        transition: all .3s;
+        line-height: $--input-height;
+
+        &:after {
+            content: '';
+            height: 100%;
+            width: 0;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+}
+
+@include b(textarea) {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    vertical-align: bottom;
+    font-size: $--font-size-base;
+
+    @include e(inner) {
+        display: block;
+        resize: vertical;
+        padding: 5px 15px;
+        line-height: 1.5;
+        box-sizing: border-box;
+        width: 100%;
+        font-size: inherit;
+        color: $--input-font-color;
+        background-color: $--input-background-color;
+        background-image: none;
+        border: $--input-border;
+        border-radius: $--input-border-radius;
+        transition: $--border-transition-base;
+
+        &::placeholder {
+            color: $--input-placeholder-color;
+        }
+
+        &:hover {
+            border-color: $--input-hover-border;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: $--input-focus-border;
+        }
+    }
+
+    & .el-input__count {
+        color: $--color-info;
+        background: $--color-white;
+        position: absolute;
+        font-size: 12px;
+        bottom: 5px;
+        right: 10px;
+    }
+}

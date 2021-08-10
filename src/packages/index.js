@@ -1,10 +1,10 @@
 import Loading from './components/loading/index.js'
 import Message from './components/message/index.js'
 import Switch from './components/switch/index.js'
+import Input from './components/input/index.js'
+import InputNumber from './components/input-number/index.js'
 
-const components = [
-  Switch
-]
+const components = [Switch, Input, InputNumber]
 
 const install = function (Vue) {
   components.forEach(component => {
@@ -20,5 +20,7 @@ export default {
   install,
   Loading,
   Message,
-  Switch
+  Switch,
+  Input,
+  InputNumber
 }

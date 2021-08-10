@@ -28,6 +28,7 @@
 /* Transition
 -------------------------- */
 $--border-transition-base: border-color .2s cubic-bezier(.645,.045,.355,1) !default;
+$--color-transition-base: color .2s cubic-bezier(.645,.045,.355,1) !default;
 
 /* Color
  * ------------------------- */
@@ -65,6 +66,9 @@ $--color-text-regular: #606266 !default;
 $--color-text-secondary: #909399 !default;
 $--color-text-placeholder: #c0c4cc !default;
 
+// Background
+$--background-color-base: #F5F7FA !default;
+
 /* Border
 -------------------------- */
 $--border-color-base: #dcdfe6 !default;
@@ -100,3 +104,9 @@ $--font-line-height-primary: 24px !default;
 $--font-line-height-secondary: 16px !default;
 
 $--font-color-disabled-base: #bbb !default;
+
+/* Disable base
+ * ------------------------- */
+$--disabled-fill-base: $--background-color-base !default;
+$--disabled-color-base: $--color-text-placeholder !default;
+$--disabled-border-base: $--border-color-light !default;
