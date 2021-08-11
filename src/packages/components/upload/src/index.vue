@@ -12,6 +12,9 @@ export default {
       default: 'text' // text,picture,picture-card
     },
 
+    multiple: Boolean,
+    accept: String,
+
     withCredentials: Boolean,
     headers: {
       type: Object,
@@ -30,6 +33,11 @@ export default {
     data: Object,
 
     beforeUpload: Function,
+    onRemove: {
+      type: Function,
+      default: noop
+    },
+    beforeRemove: Function,
     onChange: {
       type: Function,
       default: noop
@@ -52,6 +60,19 @@ export default {
     autoUpload: {
       type: Boolean,
       default: true
+    },
+
+    fileList: {
+      type: Array,
+      default () {
+        return []
+      }
+    },
+
+    limit: Number,
+    onExceed: {
+      type: Function,
+      default: noop
     }
   },
 
@@ -118,28 +139,60 @@ export default {
       fileList.splice(fileList.indexOf(file), 1)
       this.onError(err, file, this.uploadFiles)
       this.onChange(file, this.uploadFiles)
+    },
+    handleRemove (file, raw) {
+      if (raw) {
+        file = this.getFile(raw)
+      }
+      const doRemove = () => {
+        // this.abort(file)
+        const fileList = this.uploadFiles
+        fileList.splice(fileList.indexOf(file), 1)
+        this.onRemove(file, fileList)
+      }
+      if (!this.beforeRemove) {
+        doRemove()
+      } else if (typeof this.beforeRemove === 'function') {
+        const before = this.beforeRemove(file, this.uploadFiles)
+        if (before && before.then) {
+          before.then(() => {
+            doRemove()
+          }, noop)
+        } else if (before !== false) {
+          doRemove()
+        }
+      }
     }
   },
 
   render (h) {
     const uploadData = {
       props: {
+        autoUpload: this.autoUpload,
+
+        multiple: this.multiple,
+        accept: this.accept,
+
         'with-credentials': this.withCredentials,
         headers: this.headers,
         action: this.action,
         name: this.name,
         data: this.data,
 
-        autoUpload: this.autoUpload,
-        //
         'on-start': this.handleStart,
         'before-upload': this.beforeUpload,
+        'on-remove': this.handleRemove,
 
         'on-progress': this.handleProgress,
         'on-success': this.handleSuccess,
         'on-error': this.handleError,
 
-        'http-request': this.httpRequest
+        'http-request': this.httpRequest,
+
+        fileList: this.uploadFiles,
+
+        limit: this.limit,
+        'on-exceed': this.onExceed
       },
       ref: 'upload-inner'
     }

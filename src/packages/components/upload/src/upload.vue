@@ -23,6 +23,10 @@ export default {
 
     onStart: Function,
     beforeUpload: Function,
+    onRemove: {
+      type: Function,
+      default: function () {}
+    },
     onProgress: Function,
     onSuccess: Function,
     onError: Function,
@@ -30,7 +34,12 @@ export default {
     httpRequest: {
       type: Function,
       default: ajax
-    }
+    },
+
+    fileList: Array,
+
+    limit: Number,
+    onExceed: Function
   },
 
   data () {
@@ -52,10 +61,10 @@ export default {
       this.uploadFiles(files)
     },
     uploadFiles (files) {
-      //   if (this.limit && this.fileList.length + files.length > this.limit) {
-      //     this.onExceed && this.onExceed(files, this.fileList)
-      //     return
-      //   }
+      if (this.limit && this.fileList.length + files.length > this.limit) {
+        this.onExceed && this.onExceed(files, this.fileList)
+        return
+      }
       let postFiles = Array.prototype.slice.call(files)
       if (!this.multiple) {
         postFiles = postFiles.slice(0, 1)
@@ -72,36 +81,38 @@ export default {
       if (!this.beforeUpload) {
         return this.post(rawFile)
       }
-      //   const before = this.beforeUpload(rawFile)
-      //   if (before && before.then) {
-      //     before.then(
-      //       (processedFile) => {
-      //         const fileType = Object.prototype.toString.call(processedFile)
-      //         if (fileType === '[object File]' || fileType === '[object Blob]') {
-      //           if (fileType === '[object Blob]') {
-      //             processedFile = new File([processedFile], rawFile.name, {
-      //               type: rawFile.type
-      //             })
-      //           }
-      //           for (const p in rawFile) {
-      //             if (rawFile.hasOwnProperty(p)) {
-      //               processedFile[p] = rawFile[p]
-      //             }
-      //           }
-      //           this.post(processedFile)
-      //         } else {
-      //           this.post(rawFile)
-      //         }
-      //       },
-      //       () => {
-      //         this.onRemove(null, rawFile)
-      //       }
-      //     )
-      //   } else if (before !== false) {
-      //     this.post(rawFile)
-      //   } else {
-      //     this.onRemove(null, rawFile)
-      //   }
+      const before = this.beforeUpload(rawFile)
+      if (before && before.then) {
+        before.then(
+          (processedFile) => {
+            const fileType = Object.prototype.toString.call(processedFile)
+            // do something
+            if (fileType === '[object File]' || fileType === '[object Blob]') {
+              if (fileType === '[object Blob]') {
+                processedFile = new File([processedFile], rawFile.name, {
+                  type: rawFile.type
+                })
+              }
+              for (const p in rawFile) {
+                // eslint-disable-next-line no-prototype-builtins
+                if (rawFile.hasOwnProperty(p)) {
+                  processedFile[p] = rawFile[p]
+                }
+              }
+              this.post(processedFile)
+            } else {
+              this.post(rawFile)
+            }
+          },
+          () => {
+            this.onRemove(null, rawFile)
+          }
+        )
+      } else if (before !== false) {
+        this.post(rawFile)
+      } else {
+        this.onRemove(null, rawFile)
+      }
     },
     post (rawFile) {
       const { uid } = rawFile
@@ -160,8 +171,15 @@ export default {
   }
 }
 
+// before-upload
+// http-request
+//   可以 dosomething
+
 // multiple
 //   自动限制用户选择文件个数
+
+// accept
+//   文件选择器只允许你选择 accept 值指定的文件类型（实际特性会按不同的浏览器和操作系统有所不同）
 
 // http-request
 //   文件上传到服务器方法， 接收 options 参数
@@ -181,12 +199,15 @@ export default {
 // 3. upload
 //     有无beforeUpload
 //     无
-//         post方法 调用接口 上传
-//             onerror:
-//                 1. 从 uploadFiles 移除当前这个 file
-//                 2. 调用 用户定义的 on-error 方法
-//             onSuccess:
-//                 给 rawFile 添加 response 字段，value为 请求返回结果
-//             on-progress:
-//                 文件上传时，用户自定义的回调
+//       post方法 调用接口 上传
+//         onerror:
+//           1. 从 uploadFiles 移除当前这个 file
+//           2. 调用 用户定义的 on-error 方法
+//         onSuccess:
+//           给 rawFile 添加 response 字段，value为 请求返回结果
+//         on-progress:
+//           文件上传时，用户自定义的回调
+//     有
+//       验证通过, 上传
+//       验证不通过, 从 uploadFiles 移除当前这个 file
 </script>
