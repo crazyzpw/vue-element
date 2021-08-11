@@ -4,8 +4,9 @@ import Switch from './components/switch/index.js'
 import Input from './components/input/index.js'
 import InputNumber from './components/input-number/index.js'
 import Rate from './components/rate/index.js'
+import Upload from './components/upload/index.js'
 
-const components = [Switch, Input, InputNumber, Rate]
+const components = [Switch, Input, InputNumber, Rate, Upload]
 
 const install = function (Vue) {
   components.forEach(component => {
@@ -24,5 +25,6 @@ export default {
   Switch,
   Input,
   InputNumber,
-  Rate
+  Rate,
+  Upload
 }
