@@ -5,6 +5,7 @@ export default {
   props: {
     disabled: Boolean,
     autoUpload: Boolean,
+    listType: String,
 
     multiple: Boolean,
     accept: String,
@@ -140,11 +141,27 @@ export default {
       if (req && req.then) {
         req.then(options.onSuccess, options.onError)
       }
+    },
+    abort (file) {
+      const { reqs } = this
+      if (file) {
+        let uid = file
+        if (file.uid) uid = file.uid
+        if (reqs[uid]) {
+          reqs[uid].abort()
+        }
+      } else {
+        Object.keys(reqs).forEach((uid) => {
+          if (reqs[uid]) reqs[uid].abort()
+          delete reqs[uid]
+        })
+      }
     }
   },
 
   render (h) {
-    const { name, multiple, accept, handleClick, handleChange } = this
+    const { name, multiple, accept, handleClick, handleChange, listType } =
+      this
 
     const data = {
       class: {
@@ -154,6 +171,7 @@ export default {
         click: handleClick
       }
     }
+    data.class[`el-upload--${listType}`] = true
     return (
       <div {...data} tabindex="0">
         {this.$slots.default}
@@ -170,6 +188,12 @@ export default {
     )
   }
 }
+
+// submit 手动上传文件列表
+//   auto-upload要为false
+
+// on-remove
+//   用户需要定义 handleRemove 函数， 因为 upload 组件只会从 uploadFiles的 list 中删除， 并不会从服务器中删除
 
 // before-upload
 // http-request
@@ -210,4 +234,14 @@ export default {
 //     有
 //       验证通过, 上传
 //       验证不通过, 从 uploadFiles 移除当前这个 file
+
+// https://developer.mozilla.org/zh-CN/docs/Web/API/FormData
+// FormData
+// https://developer.mozilla.org/zh-CN/docs/Web/API/File
+// File
+// https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/Input/file
+// <input type="file">
+
+// File>在web应用程序中使用文件 大全
+// https://developer.mozilla.org/zh-CN/docs/Web/API/File/Using_files_from_web_applications#example.3a_using_object_urls_to_display_images
 </script>

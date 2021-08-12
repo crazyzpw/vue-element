@@ -1,0 +1,129 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(upload) {
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+
+    @include e(input) {
+        display: none;
+    }
+
+    @include e(tip) {
+        font-size: 12px;
+        color: $--color-text-regular;
+        margin-top: 7px;
+    }
+}
+
+@include b(upload-list) {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include e(item) {
+        transition: all .5s cubic-bezier(.55, 0, .1, 1);
+        font-size: 14px;
+        color: $--color-text-regular;
+        line-height: 1.8;
+        margin-top: 5px;
+        position: relative;
+        box-sizing: border-box;
+        border-radius: 4px;
+        width: 100%;
+
+        &:first-child {
+            margin-top: 10px;
+        }
+
+        & .el-icon-upload-success {
+            color: $--color-success;
+        }
+
+        .el-icon-close {
+            display: none;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+            opacity: .75;
+            color: $--color-text-regular;
+            //transform: scale(.7);
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        &:hover {
+            background-color: $--background-color-base;
+
+            .el-icon-close {
+                display: inline-block;
+            }
+        }
+
+        @include when(success) {
+            .el-upload-list__item-status-label {
+                display: block;
+            }
+
+            .el-upload-list__item-name:hover,
+            .el-upload-list__item-name:focus {
+                color: $--link-hover-color;
+                cursor: pointer;
+            }
+
+            &:focus:not(:hover) {
+                /* 键盘focus */
+                .el-icon-close-tip {
+                    display: inline-block;
+                }
+            }
+
+            &:not(.focusing):focus,
+            &:active {
+                /* click时 */
+                outline-width: 0;
+                .el-icon-close-tip {
+                    display: none;
+                }
+            }
+
+            &:hover,
+            &:focus {
+                .el-upload-list__item-status-label {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    @include e(item-name) {
+        color: $--color-text-regular;
+        display: block;
+        margin-right: 40px;
+        padding-left: 4px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        transition: color .3s;
+
+        [class^="el-icon"] {
+            height: 100%;
+            margin-right: 7px;
+            color: $--color-text-secondary;
+            line-height: inherit;
+        }
+    }
+
+    @include e(item-status-label) {
+        position: absolute;
+        right: 5px;
+        top: 0;
+        line-height: inherit;
+        display: none;
+    }
+}

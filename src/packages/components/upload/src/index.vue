@@ -1,5 +1,6 @@
 <script>
 import Upload from './upload.vue'
+import UploadList from './upload-list.vue'
 
 function noop () {}
 
@@ -73,6 +74,14 @@ export default {
     onExceed: {
       type: Function,
       default: noop
+    },
+
+    showFileList: {
+      type: Boolean,
+      default: true
+    },
+    onPreview: {
+      type: Function
     }
   },
 
@@ -83,7 +92,8 @@ export default {
     }
   },
   components: {
-    Upload
+    Upload,
+    UploadList
   },
 
   methods: {
@@ -145,7 +155,7 @@ export default {
         file = this.getFile(raw)
       }
       const doRemove = () => {
-        // this.abort(file)
+        this.abort(file)
         const fileList = this.uploadFiles
         fileList.splice(fileList.indexOf(file), 1)
         this.onRemove(file, fileList)
@@ -162,12 +172,44 @@ export default {
           doRemove()
         }
       }
+    },
+    abort (file) {
+      this.$refs['upload-inner'].abort(file)
+    },
+    submit () {
+      this.uploadFiles
+        .filter((file) => file.status === 'ready')
+        .forEach((file) => {
+          this.$refs['upload-inner'].upload(file.raw)
+        })
     }
   },
 
   render (h) {
+    let uploadList
+
+    if (this.showFileList) {
+      uploadList = (
+        <UploadList
+          listType={this.listType}
+          files={this.uploadFiles}
+          on-remove={this.handleRemove}
+          handlePreview={this.onPreview}
+        >
+          {(props) => {
+            if (this.$scopedSlots.file) {
+              return this.$scopedSlots.file({
+                file: props.file
+              })
+            }
+          }}
+        </UploadList>
+      )
+    }
+
     const uploadData = {
       props: {
+        listType: this.listType,
         autoUpload: this.autoUpload,
 
         multiple: this.multiple,
@@ -192,7 +234,9 @@ export default {
         fileList: this.uploadFiles,
 
         limit: this.limit,
-        'on-exceed': this.onExceed
+        'on-exceed': this.onExceed,
+
+        'on-preview': this.onPreview
       },
       ref: 'upload-inner'
     }
@@ -205,6 +249,8 @@ export default {
         {this.$slots.trigger
           ? [uploadComponent, this.$slots.default]
           : uploadComponent}
+        {this.$slots.tip}
+        {this.listType !== 'picture-card' ? uploadList : ''}
       </div>
     )
   }
