@@ -1,0 +1,12 @@
+@import "var";
+
+.el-list-enter-active,
+.el-list-leave-active {
+    transition: all 1s;
+}
+
+.el-list-enter,
+.el-list-leave-active {
+    opacity: 0;
+    transform: translateY(-30px);
+}
