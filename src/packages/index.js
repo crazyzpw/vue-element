@@ -6,7 +6,16 @@ import InputNumber from './components/input-number/index.js'
 import Rate from './components/rate/index.js'
 import Upload from './components/upload/index.js'
 
-const components = [Switch, Input, InputNumber, Rate, Upload]
+import CollapseTransition from './transitions/collapse-transition.js'
+
+const components = [
+  Switch,
+  Input,
+  InputNumber,
+  Rate,
+  Upload,
+  CollapseTransition
+]
 
 const install = function (Vue) {
   components.forEach(component => {
@@ -26,5 +35,7 @@ export default {
   Input,
   InputNumber,
   Rate,
-  Upload
+  Upload,
+
+  CollapseTransition
 }

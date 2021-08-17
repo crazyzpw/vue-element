@@ -1,4 +1,6 @@
 ## 学习Element组件
+内置过渡动画
+- [x] collapse 展开折叠
 ### 组件列表
 ###### Form
 - [ ] Input 输入框
