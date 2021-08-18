@@ -6,6 +6,8 @@ import InputNumber from './components/input-number/index.js'
 import Rate from './components/rate/index.js'
 import Upload from './components/upload/index.js'
 
+import Popover from './components/popover/index.js'
+
 import CollapseTransition from './transitions/collapse-transition.js'
 
 const components = [
@@ -14,6 +16,9 @@ const components = [
   InputNumber,
   Rate,
   Upload,
+
+  Popover,
+
   CollapseTransition
 ]
 
@@ -36,6 +41,8 @@ export default {
   InputNumber,
   Rate,
   Upload,
+
+  Popover,
 
   CollapseTransition
 }

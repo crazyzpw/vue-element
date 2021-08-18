@@ -26,12 +26,25 @@
 //     #{} 插值语句也可以在属性值中插入 SassScript
 
 /* Transition
--------------------------- */
+ * ------------------------ */
+$--fade-linear-transition: opacity 200ms linear !default;
 $--border-transition-base: border-color .2s cubic-bezier(.645,.045,.355,1) !default;
 $--color-transition-base: color .2s cubic-bezier(.645,.045,.355,1) !default;
 
+/* z-index
+ * ------------------------ */
+$--index-normal: 1 !default;
+$--index-top: 1000 !default;
+$--index-popper: 2000 !default;
+
+/* Box-shadow
+ * ------------------------ */
+$--box-shadow-base: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04) !default;
+$--box-shadow-dark: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .12) !default;
+$--box-shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.1) !default;
+
 /* Color
- * ------------------------- */
+ * ------------------------ */
 $--color-primary: #409eff !default;
 $--color-white: #fff !default;
 $--color-black: #000 !default;
@@ -66,11 +79,12 @@ $--color-text-regular: #606266 !default;
 $--color-text-secondary: #909399 !default;
 $--color-text-placeholder: #c0c4cc !default;
 
-// Background
+/* Background
+ * ------------------------ */
 $--background-color-base: #F5F7FA !default;
 
 /* Border
--------------------------- */
+ * ------------------------ */
 $--border-color-base: #dcdfe6 !default;
 $--border-color-light: #e4e7ed !default;
 $--border-color-lighter: #ebeef5 !default;
@@ -87,7 +101,7 @@ $--border-radius-zero: 0 !default;
 $--border-radius-circle: 100% !default;
 
 /* Typography
- * ------------------------- */
+ * ------------------------ */
 $--font-path: './fonts' !default;
 $--font-display: 'auto' !default;
 $--font-size-extra-large: 20px !default;
@@ -115,3 +129,7 @@ $--disabled-border-base: $--border-color-light !default;
 ---------------------------- */
 $--link-color: $--color-primary-light-2 !default;
 $--link-hover-color: $--color-primary !default;
+
+/* Tooltip
+ * ------------------------- */
+$--tooltip-arrow-size: 6px !default;
